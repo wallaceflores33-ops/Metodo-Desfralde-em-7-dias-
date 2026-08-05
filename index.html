@@ -507,7 +507,7 @@ src="https://www.facebook.com/tr?id=1960326864676650&ev=PageView&noscript=1"
         <h1>O Furinho Mágico faz seu filho(a) largar a chupeta sozinho em até 5 dias — ou seu dinheiro de volta.</h1>
         <p class="hero-sub">Nenhum susto. Nenhuma pressão. Mesmo que você já tenha tentado de tudo, essa sequência simples de aplicar em casa faz o interesse pela chupeta desaparecer sozinho.</p>
         <div class="cta-row">
-          <a href="#mecanismo" class="btn">Entender por que funciona →</a>
+          <a href="#mecanismo" class="btn" onclick="fbq('track', 'ViewContent', {content_name: 'Ver mecanismo'});">Entender por que funciona →</a>
         </div>
         <div class="hero-note">✅ Garantia de 7 dias &nbsp;·&nbsp; 📦 Acesso imediato &nbsp;·&nbsp; 👶 Chupeta + mamadeira no mesmo método</div>
       </div>
@@ -680,7 +680,7 @@ src="https://www.facebook.com/tr?id=1960326864676650&ev=PageView&noscript=1"
         <div class="timer-unit"><div class="n" id="sec">00</div><div class="l">seg</div></div>
       </div>
       <div class="cta-center">
-        <a href="https://pay.cakto.com.br/xix28ah_1023379" class="btn">Garantir por R$27,90 agora →</a>
+        <a href="https://pay.cakto.com.br/xix28ah_1023379" class="btn" onclick="fbq('track', 'InitiateCheckout', {value: 27.90, currency: 'BRL', content_name: 'Método do Furinho Mágico'});">Garantir por R$27,90 agora →</a>
       </div>
     </div>
     </div>
@@ -747,7 +747,7 @@ src="https://www.facebook.com/tr?id=1960326864676650&ev=PageView&noscript=1"
     </div>
     <span class="eyebrow" style="color:var(--moon-gold);">Últimas vagas da oferta relâmpago</span>
     <h2>Em 5 dias essa chupeta pode estar guardada — de vez, sem trauma pra ninguém</h2>
-    <a href="#oferta" class="btn">Quero o Método do Furinho Mágico por R$27,90 →</a>
+    <a href="#oferta" class="btn" onclick="fbq('track', 'ViewContent', {content_name: 'Voltar pra oferta'});">Quero o Método do Furinho Mágico por R$27,90 →</a>
     <div class="hero-note" style="justify-content:center; margin-top:18px;">🛡️ Garantia de 7 dias · Acesso imediato</div>
   </div>
 </section>
@@ -799,12 +799,30 @@ src="https://www.facebook.com/tr?id=1960326864676650&ev=PageView&noscript=1"
     });
   });
 
-  /* ====== TRACKING PLACEHOLDER ======
-     1) Meta Pixel: já adicionado no <head> (ID 1960326864676650).
-     2) Supermago: colar o script de rastreamento conforme integração já usada nos outros produtos.
-     3) Checkout: trocar os demais href="#" dos botões de CTA pelo link de checkout
-        da plataforma escolhida (Kiwify / Hotmart / Eduzz / Greenn / Wiapy).
-  ======================================= */
+  // ---- Meta Pixel Events ----
+  // ViewContent - quando carrega a página
+  fbq('track', 'ViewContent', {
+    content_name: 'Método do Furinho Mágico',
+    content_type: 'product'
+  });
+
+  // Track de scroll até oferta
+  function trackScrollToOffer(){
+    const offerSection = document.getElementById('oferta');
+    const offerObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          fbq('track', 'ViewContent', {
+            content_name: 'Viu a seção de oferta'
+          });
+          offerObserver.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.3});
+    offerObserver.observe(offerSection);
+  }
+  trackScrollToOffer();
+
 </script>
 
 </body>
